@@ -45,13 +45,15 @@ pub fn delete_card(conn: &mut PgConnection, target_id: &i32){
         (yg.filter(id.eq(target_id)))
         .execute(conn)
         .expect("Error deleting card");
-    println!("Deleted entry of id {}", target_id)
 }
+pub fn list_card_by_id(conn: &mut PgConnection, target_id: &i32) -> Json<Card>{
+    use self::schema::yg::dsl::*;
+    
+    let result = yg
+        .filter(id.eq(target_id))
+        .first::<Card>(conn)
+        .expect("Could not find card by Id");
 
-pub fn input_handler(){
-    println!("Which operation you want to perform?");
-    println!("1. Create a card");
-    println!("2. Delete a card");
-    println!("3. List a card");
-    println!("4. List all cards");
+        Json(result)
+    
 }

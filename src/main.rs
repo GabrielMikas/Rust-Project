@@ -28,7 +28,16 @@ fn delete_yg_card(target_id: i32){
     let mut conn = connect();
     delete_card(&mut conn, &target_id)
 }
+
+#[get("/list/<target_id>")]
+fn list_yg_card_by_id(target_id: i32) -> Json<Card>{
+    let mut conn = connect();
+    list_card_by_id(&mut conn, &target_id)
+}
+
+
+
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/yg", routes![post_yg_card, list_yg_cards, delete_yg_card])
+    rocket::build().mount("/yg", routes![post_yg_card, list_yg_cards, delete_yg_card, list_yg_card_by_id])
 }
