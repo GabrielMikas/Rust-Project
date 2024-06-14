@@ -4,32 +4,32 @@ use diesel::prelude::*;
 use dotenvy::dotenv;
 use std::env::{self};
 use self::models::{Card, NewCard};
-
 pub mod models;
 pub mod schema;
+pub mod errors;
 
 pub fn connect() -> PgConnection {
     dotenv().ok();
     let db_url = env::var("DATABASE_URL").expect("Could not fetch database url");
     PgConnection::establish(&db_url).unwrap_or_else(|_| panic!("Error connecting to {}", db_url))
 }
-// pub fn create_card(conn: &mut PgConnection, name: &str, code: &str, rarity: &str, amount: &str, edition: &str, url: &str) -> Card{
-//     use crate::schema::yg;
-//     let new_card = NewCard {
-//         card_name: name,
-//         card_code: code,
-//         card_rarity: rarity,
-//         card_amount: amount,
-//         card_edition: edition,
-//         card_url: url
-//     };
+pub fn create_card(conn: &mut PgConnection, name: String, code: String, rarity: String, amount: String, edition: String, url: String) -> Card{
+    use crate::schema::yg;
+    let new_card = NewCard {
+        card_name: name,
+        card_code: code,
+        card_rarity: rarity,
+        card_amount: amount,
+        card_edition: edition,
+        card_url: url
+    };
 
-//     diesel::insert_into(yg::table)
-//         .values(&new_card)
-//         .returning(Card::as_returning())
-//         .get_result(conn)
-//         .expect("Could not insert into the database")
-// }
+    diesel::insert_into(yg::table)
+        .values(&new_card)
+        .returning(Card::as_returning())
+        .get_result(conn)
+        .expect("Could not insert into the database")
+}
 // pub fn list_cards(conn: &mut PgConnection) -> Json<Vec<Card>>{
 //     use self::schema::yg::dsl::*;
 
