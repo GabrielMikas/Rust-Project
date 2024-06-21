@@ -1,12 +1,12 @@
 use axum::Json;
-use diesel::{pg::PgConnection};
 use diesel::prelude::*;
 use dotenvy::dotenv;
 use std::env::{self};
 use self::models::{Card, NewCard};
+pub mod hobbies;
 pub mod models;
 pub mod schema;
-pub mod errors;
+pub mod utils;
 
 pub fn connect() -> PgConnection {
     dotenv().ok();
