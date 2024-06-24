@@ -11,10 +11,8 @@ use serde_json::{json, Value};
 
 pub fn routes() -> Router {
     Router::new()
-        .route("/yg/:target_id", get(get_by_id_handler_yg))
-        .route("/yg/delete/:target_id", delete(delete_handler_yg))
-        .route("/yg/create", post(post_handler_yg))
-        .route("/yg", get(get_all_handler_yg))
+        .route("/yg/:target_id", get(get_by_id_handler_yg).delete(delete_handler_yg))
+        .route("/yg", post(post_handler_yg).get(get_all_handler_yg))
 }
 
 async fn delete_handler_yg(Path(target_id): Path<i32>) -> impl IntoResponse {
