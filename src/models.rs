@@ -15,11 +15,12 @@ pub struct Card{
 }
 #[derive(Insertable, Serialize, Deserialize)]
 #[diesel(table_name = crate::schema::yg)]
-pub struct NewCard<'a>{
-    pub card_name: &'a str,
-    pub card_code: &'a str,
-    pub card_rarity: &'a str,
-    pub card_amount: &'a str,
-    pub card_edition: &'a str,
-    pub card_url: &'a str,
+pub struct NewCard{
+    pub card_name: String,
+    pub card_code: String,
+    pub card_rarity: String,
+    pub card_amount: String,
+    pub card_edition: String,
+    pub card_url: String,
 }
+
