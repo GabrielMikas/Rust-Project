@@ -28,9 +28,10 @@ async fn get_by_id_handler_yg(Path(target_id): Path<i32>) -> impl IntoResponse {
 
     #[allow(unreachable_patterns)]
     match list_yg_card_by_id(&mut conn, &target_id) {
-        Ok(_) => Ok(()),
+        Ok(card) => Ok(card),
+        Err(diesel::result::Error::NotFound) => Err(Error::NotFound),
         Err(_) => Err(Error::UnmappedError),
-        Err(diesel::result::Error::NotFound) => Err(Error::NotFound)
+        
     }
 }
 async fn post_handler_yg(body: Json<NewCard>) -> Result<Json<Value>> {
