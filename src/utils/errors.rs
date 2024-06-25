@@ -18,6 +18,6 @@ impl IntoResponse for Error{
             Self::InvalidBody => StatusCode::BAD_REQUEST,
             Self::Accepted => StatusCode::ACCEPTED
         };
-        (StatusCode::INTERNAL_SERVER_ERROR, body).into_response()
+        (body).into_response()
     }
 }
